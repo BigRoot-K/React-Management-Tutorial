@@ -1,6 +1,20 @@
-import logo from './logo.svg';
 import Customer from './components/Customer'
 import './App.css';
+import { Table, TableBody, TableHead, TableRow, TableCell, Paper  } from '@mui/material';
+import { withStyles } from '@mui/styles';
+import React, {Component} from 'react';
+
+
+const useStyles =  theme => ({
+  root: {
+    width: '100%',
+    overflowX: "auto", 
+    
+  },
+  table: {
+    minWidth: 1080
+  }
+});
 
 const customer = [
   {
@@ -29,26 +43,33 @@ const customer = [
   }
 ];
 
-function App() {
-  return (
-    <div>
-      {
-        customer.map(cus => {
-          return (
-            <Customer 
-              key={cus.id}
-              id={cus.id} 
-              image={cus.image}
-              name={cus.name}
-              birthday={cus.birthday}
-              gender={cus.gender}
-              job={cus.job}
-            />  
-          ); 
-        })
-      }  
-    </div>
-  );
-}
+class App extends Component {
 
-export default App;
+  render() {
+
+    const  classes  = this.props.classes;
+
+    return (
+      <Paper className={classes.root} >
+        <Table className={classes.table} >
+          <TableHead>
+            <TableRow>
+              <TableCell>번호</TableCell>
+              <TableCell>이미지</TableCell>
+              <TableCell>이름</TableCell>
+              <TableCell>생년월일</TableCell>
+              <TableCell>성별</TableCell>
+              <TableCell>직업</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {customer.map(cus => {
+              return (<Customer key={cus.id} id={cus.id} image={cus.image} name={cus.name} birthday={cus.birthday} gender={cus.gender} job={cus.job} />)
+            })}
+          </TableBody>
+        </Table>
+      </Paper>
+    );
+  }
+}
+export default withStyles(useStyles)(App);
